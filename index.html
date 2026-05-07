@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antonio Garcia — Motion & Visual Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --black: #080808;
+    --off-white: #f0ece4;
+    --warm-gray: #9a9690;
+    --accent: #c8b89a;
+    --accent-dim: #6b5f50;
+    --red: #c0392b;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,184,154,0.1);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.15em;
+    color: var(--off-white);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--warm-gray);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--off-white); }
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--accent-dim);
+    color: var(--accent) !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 2px;
+    transition: all 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--accent) !important; color: var(--black) !important; }
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(192,57,43,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(200,184,154,0.06) 0%, transparent 60%),
+      var(--black);
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 12vw, 11rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    position: relative;
+    z-index: 1;
+    color: var(--off-white);
+  }
+  .hero-title span {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(240,236,228,0.3);
+  }
+  .hero-sub {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--warm-gray);
+    max-width: 420px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .hero-stats { display: flex; gap: 3rem; }
+  .stat { text-align: right; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--off-white);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    margin-top: 0.25rem;
+  }
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-dim);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    z-index: 1;
+    animation: bounce 2s infinite;
+  }
+  .scroll-indicator::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent-dim), transparent);
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+  section { padding: 7rem 3rem; }
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .work { background: var(--black); }
+  .work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .work-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: 0.03em;
+  }
+  .view-all {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-dim);
+    padding-bottom: 2px;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .view-all:hover { color: var(--off-white); border-color: var(--off-white); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5px;
+    background: rgba(200,184,154,0.08);
+  }
+  .project-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--black);
+    aspect-ratio: 4/3;
+  }
+  .project-card.large { grid-column: span 2; aspect-ratio: 16/7; }
+  .project-visual { width: 100%; height: 100%; position: relative; overflow: hidden; }
+  .vis-prometheus {
+    background: radial-gradient(ellipse 80% 60% at 50% 60%, #c8a882 0%, #5a3a1a 30%, #1a0f05 60%, #080808 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .vis-spotify {
+    background: radial-gradient(ellipse at 50% 50%, #1a1a2e 0%, #080808 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .vis-federal {
+    background: linear-gradient(135deg, #0a1628 0%, #1c2d4a 50%, #0a1628 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .vis-sabria {
+    background: radial-gradient(ellipse at 30% 70%, #3d2a1a 0%, #1a0f08 50%, #080808 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .vis-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    letter-spacing: 0.1em;
+    opacity: 0.15;
+    text-align: center;
+    padding: 1rem;
+    transition: opacity 0.4s;
+    color: var(--off-white);
+  }
+  .project-card:hover .vis-text { opacity: 0.3; }
+  .project-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.9) 0%, rgba(8,8,8,0.2) 50%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    transition: background 0.4s;
+  }
+  .project-card:hover .project-overlay {
+    background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.4) 60%, rgba(8,8,8,0.1) 100%);
+  }
+  .project-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .project-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    color: var(--off-white);
+    margin-bottom: 0.5rem;
+  }
+  .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    border: 1px solid rgba(154,150,144,0.3);
+    padding: 0.2rem 0.6rem;
+    border-radius: 1px;
+  }
+  .project-arrow {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(200,184,154,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 0.3s;
+  }
+  .project-card:hover .project-arrow { opacity: 1; transform: translateY(0); }
+  .about {
+    background: #0d0c0b;
+    border-top: 1px solid rgba(200,184,154,0.08);
+    border-bottom: 1px solid rgba(200,184,154,0.08);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .about-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 2rem;
+  }
+  .about-title em {
+    font-style: italic;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .about-body {
+    color: var(--warm-gray);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+  .about-body strong { color: var(--off-white); font-weight: 400; }
+  .about-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.5rem; }
+  .pill {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(200,184,154,0.25);
+    color: var(--accent);
+    border-radius: 100px;
+  }
+  .about-photo-frame { position: relative; aspect-ratio: 3/4; max-height: 600px; }
+  .about-photo-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 60%, #2a1f15 0%, #0d0c0b 70%);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .about-photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-initial {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 10rem;
+    color: rgba(200,184,154,0.08);
+    letter-spacing: -0.05em;
+  }
+  .about-photo-note {
+    position: absolute;
+    bottom: -1.5rem; right: 0;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+  }
+  .about-corner {
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--accent-dim);
+    border-style: solid;
+    opacity: 0.4;
+  }
+  .about-corner.tl { top: -8px; left: -8px; border-width: 1px 0 0 1px; }
+  .about-corner.br { bottom: -8px; right: -8px; border-width: 0 1px 1px 0; }
+  .experience { background: var(--black); }
+  .exp-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: 0.03em;
+    margin-bottom: 4rem;
+  }
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-top: 1px solid rgba(200,184,154,0.1);
+  }
+  .exp-item:last-child { border-bottom: 1px solid rgba(200,184,154,0.1); }
+  .exp-meta { padding-top: 0.2rem; }
+  .exp-date { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+  .exp-company { font-size: 0.8rem; color: var(--warm-gray); line-height: 1.5; }
+  .exp-role {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    color: var(--off-white);
+    margin-bottom: 0.75rem;
+    line-height: 1;
+  }
+  .exp-desc { font-size: 0.9rem; color: var(--warm-gray); line-height: 1.7; max-width: 600px; }
+  .exp-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+  .credentials { background: #0d0c0b; }
+  .cred-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(200,184,154,0.08);
+    margin-top: 3rem;
+  }
+  .cred-item { background: #0d0c0b; padding: 2.5rem 2rem; }
+  .cred-icon { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 1rem; }
+  .cred-title { font-size: 1rem; font-weight: 500; color: var(--off-white); margin-bottom: 0.5rem; }
+  .cred-desc { font-size: 0.85rem; color: var(--warm-gray); line-height: 1.6; }
+  .contact {
+    background: #0d0c0b;
+    border-top: 1px solid rgba(200,184,154,0.08);
+    text-align: center;
+    padding: 8rem 3rem;
+  }
+  .contact-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .contact-title span { color: transparent; -webkit-text-stroke: 1px rgba(240,236,228,0.2); }
+  .contact-sub { color: var(--warm-gray); font-size: 1rem; max-width: 400px; margin: 0 auto 0.75rem; line-height: 1.7; }
+  .contact-email { color: var(--accent); font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 2.5rem; display: block; }
+  .contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--black);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    border-radius: 2px;
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover { background: var(--off-white); transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    border-radius: 2px;
+    border: 1px solid var(--accent-dim);
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--off-white); }
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(200,184,154,0.08);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.15em; color: var(--warm-gray); }
+  .footer-copy { font-size: 0.7rem; color: var(--accent-dim); letter-spacing: 0.1em; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { font-size: 0.7rem; color: var(--accent-dim); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--off-white); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow { animation: fadeUp 0.8s ease 0.2s both; }
+  .hero-title { animation: fadeUp 0.8s ease 0.4s both; }
+  .hero-sub { animation: fadeUp 0.8s ease 0.6s both; }
+  .marquee-section {
+    overflow: hidden;
+    border-top: 1px solid rgba(200,184,154,0.08);
+    border-bottom: 1px solid rgba(200,184,154,0.08);
+    padding: 1.2rem 0;
+    background: #0a0908;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; letter-spacing: 0.3em; color: var(--accent-dim); text-transform: uppercase; flex-shrink: 0; }
+  .marquee-dot { color: var(--accent); margin-right: 3rem; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .edu-section { background: var(--black); padding: 4rem 3rem; border-top: 1px solid rgba(200,184,154,0.08); }
+  .edu-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .edu-degree { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.2rem, 3vw, 1.8rem); letter-spacing: 0.05em; color: var(--off-white); }
+  .edu-school { font-size: 0.85rem; color: var(--warm-gray); margin-top: 0.25rem; }
+  .edu-badge { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent-dim); padding: 0.4rem 1rem; border-radius: 2px; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="nav-logo">Antonio Garcia</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-eyebrow">Motion & Visual Designer — DMV Area</div>
+  <h1 class="hero-title">ANTONIO<br><span>GARCIA</span></h1>
+  <div class="hero-sub">
+    <p class="hero-desc">Multidisciplinary graphic designer with an active Secret Security Clearance. Cinematic motion graphics, music branding, and visual communications — from defense tech to entertainment.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">BSU</div><div class="stat-label">Bowie State</div></div>
+      <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Projects</div></div>
+      <div class="stat"><div class="stat-num">S</div><div class="stat-label">Secret Clearance</div></div>
+    </div>
+  </div>
+  <div class="scroll-indicator">Scroll</div>
+</section>
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">After Effects</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Motion Graphics</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Adobe Illustrator</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Cinematic Design</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Brand Identity</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Music Branding</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Technical Infographics</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">InDesign</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Storyboarding</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Secret Clearance</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">After Effects</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Motion Graphics</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Adobe Illustrator</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Cinematic Design</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Brand Identity</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Music Branding</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Technical Infographics</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">InDesign</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Storyboarding</span><span class="marquee-dot">✦</span>
+    <span class="marquee-item">Secret Clearance</span><span class="marquee-dot">✦</span>
+  </div>
+</div>
+<section class="work" id="work">
+  <div class="work-header">
+    <div>
+      <div class="section-label">Selected Work</div>
+      <h2 class="work-title">Featured<br>Projects</h2>
+    </div>
+    <a href="https://www.behance.net/tgarcia1456d8a" target="_blank" class="view-all">View Full Portfolio ↗</a>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card large">
+      <div class="project-visual vis-prometheus"><div class="vis-text">PROMETHEUS</div></div>
+      <div class="project-overlay">
+        <div class="project-num">01</div>
+        <div class="project-name">Prometheus — Cinematic Motion Package</div>
+        <div class="project-tags">
+          <span class="tag">Film Branding</span><span class="tag">Key Art</span><span class="tag">Motion Design</span><span class="tag">After Effects</span><span class="tag">Photoshop</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+    <div class="project-card">
+      <div class="project-visual vis-spotify"><div class="vis-text">REGGAETON</div></div>
+      <div class="project-overlay">
+        <div class="project-num">02</div>
+        <div class="project-name">Playlist Visuals — Spotify Motion Series</div>
+        <div class="project-tags"><span class="tag">Music Branding</span><span class="tag">Motion Graphics</span><span class="tag">After Effects</span></div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+    <div class="project-card">
+      <div class="project-visual vis-sabria"><div class="vis-text">SABRIA LARAE</div></div>
+      <div class="project-overlay">
+        <div class="project-num">03</div>
+        <div class="project-name">Sabria Larae — Music Digital Press Kit</div>
+        <div class="project-tags"><span class="tag">Artist Branding</span><span class="tag">Press Kit</span><span class="tag">Illustrator</span></div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+    <div class="project-card">
+      <div class="project-visual vis-federal"><div class="vis-text">FORWARD EDGE</div></div>
+      <div class="project-overlay">
+        <div class="project-num">04</div>
+        <div class="project-name">Defense Tech — Motion & Infographic Work</div>
+        <div class="project-tags"><span class="tag">Defense Tech</span><span class="tag">Technical Infographics</span><span class="tag">Motion Graphics</span><span class="tag">Secret Clearance</span></div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </div>
+  </div>
+</section>
+<section class="about" id="about">
+  <div class="about-grid">
+    <div>
+      <div class="section-label">About</div>
+      <h2 class="about-title">DESIGNER.<br><em>Storyteller.</em><br>CREATOR.</h2>
+      <p class="about-body">
+        I'm Antonio Garcia — a multidisciplinary graphic designer and motion artist based in the DMV area. I graduated from <strong>Bowie State University</strong> with a B.A. in Visual Communication & Digital Media Arts, Advertising & Design.<br><br>
+        My work spans two worlds. Professionally I create motion graphics, technical infographics, and visual communications for defense technology. Creatively I build cinematic brand experiences for artists, musicians, and entertainment projects through my studio <strong>Echolume</strong>.<br><br>
+        I hold an active <strong>Secret Security Clearance</strong> and bring the same precision and craft to every project — whether it's a theatrical film poster or an Air Force compliance roadmap.
+      </p>
+      <div class="about-pills">
+        <span class="pill">After Effects</span><span class="pill">Photoshop</span><span class="pill">Illustrator</span><span class="pill">InDesign</span><span class="pill">Motion Graphics</span><span class="pill">Storyboarding</span><span class="pill">Brand Identity</span><span class="pill">Key Art</span><span class="pill">PowerPoint</span><span class="pill">Secret Clearance</span>
+      </div>
+      <a href="mailto:tgarcia1454@gmail.com" class="btn-primary">Get In Touch</a>
+    </div>
+    <div class="about-photo-frame">
+      <div class="about-photo-bg">
+        <div class="about-photo-placeholder"><span class="about-initial">AG</span></div>
+      </div>
+      <div class="about-corner tl"></div>
+      <div class="about-corner br"></div>
+      <div class="about-photo-note">Add your photo here</div>
+    </div>
+  </div>
+</section>
+<section class="experience" id="experience">
+  <div class="section-label">Experience</div>
+  <h2 class="exp-title">Where I've<br>Worked</h2>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-date">Feb 2026 — Present</div>
+        <div class="exp-company">Forward Edge AI<br>Remote</div>
+      </div>
+      <div>
+        <div class="exp-role">Content Creator & Motion Graphics Designer</div>
+        <p class="exp-desc">Producing motion graphic videos, technical infographics, and executive-facing visual communications for a defense technology company. Work includes animated product demos distributed by the CEO to external government partners, Air Force IT governance infographics, and multi-phase product roadmap visualizations. Operating in a Secret clearance required environment.</p>
+        <div class="exp-tags"><span class="tag">After Effects</span><span class="tag">Illustrator</span><span class="tag">Motion Graphics</span><span class="tag">Defense Tech</span><span class="tag">Secret Clearance</span></div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-date">Oct 2023 — Present</div>
+        <div class="exp-company">Echolume<br>Remote</div>
+      </div>
+      <div>
+        <div class="exp-role">Founder & Graphic Designer</div>
+        <p class="exp-desc">Designing and delivering branding kits, motion presentations, technical brochures, infographics, and pitch decks for small businesses, nonprofits, and startup clients. Providing layout refinement and export production across Adobe Creative Cloud ensuring cross-platform compatibility.</p>
+        <div class="exp-tags"><span class="tag">Brand Identity</span><span class="tag">Infographics</span><span class="tag">InDesign</span><span class="tag">PowerPoint</span></div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-date">Jun 2024 — Sep 2025</div>
+        <div class="exp-company">Constellis / DHS<br>Washington D.C.</div>
+      </div>
+      <div>
+        <div class="exp-role">Mission Communication Support</div>
+        <p class="exp-desc">Produced and maintained daily visual-based activity and incident reports in a high-security federal contract environment for the U.S. Department of Homeland Security. Managed structured logs and documentation ensuring 100% adherence to reporting guidelines and confidentiality requirements.</p>
+        <div class="exp-tags"><span class="tag">Federal Contract</span><span class="tag">Documentation</span><span class="tag">Security</span></div>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-date">Feb 2025</div>
+        <div class="exp-company">Evergreen Smoothie Co.<br>Washington D.C.</div>
+      </div>
+      <div>
+        <div class="exp-role">Production Assistant & Flyer Designer</div>
+        <p class="exp-desc">Designed casting and promotional flyers for the company's wellness campaign ensuring brand consistency, color accuracy, and print/digital clarity. Managed pre-press production tasks including image resizing, resolution verification, and vendor file export.</p>
+        <div class="exp-tags"><span class="tag">Print Design</span><span class="tag">Brand</span><span class="tag">Pre-press</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="edu-section">
+  <div class="edu-row">
+    <div>
+      <div class="section-label">Education</div>
+      <div class="edu-degree">B.A. Visual Communication & Digital Media Arts</div>
+      <div class="edu-school">Advertising & Design — Bowie State University</div>
+    </div>
+    <div class="edu-badge">BSU Graduate</div>
+  </div>
+</div>
+<section class="credentials">
+  <div class="section-label">What I Bring</div>
+  <div class="cred-grid">
+    <div class="cred-item">
+      <div class="cred-icon">01</div>
+      <div class="cred-title">Cinematic Motion Design</div>
+      <p class="cred-desc">Theatrical key art, animated title sequences, and motion graphic packages. From concept through final delivery in After Effects and Photoshop.</p>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">02</div>
+      <div class="cred-title">Music & Entertainment Branding</div>
+      <p class="cred-desc">Artist press kits, album artwork, playlist visuals, and promotional campaigns rooted in genre-specific visual language and cultural awareness.</p>
+    </div>
+    <div class="cred-item">
+      <div class="cred-icon">03</div>
+      <div class="cred-title">Defense Tech Communications</div>
+      <p class="cred-desc">Technical infographics, product roadmaps, and executive-facing visual content for defense and government clients. Active Secret Security Clearance.</p>
+    </div>
+  </div>
+</section>
+<section class="contact" id="contact">
+  <div class="section-label" style="justify-content:center;">Let's Work</div>
+  <h2 class="contact-title">START A<br><span>PROJECT</span></h2>
+  <p class="contact-sub">Available for freelance, contract, and full-time roles. Motion graphics, branding, and visual communications.</p>
+  <span class="contact-email">tgarcia1454@gmail.com · (301) 502-8407</span>
+  <div class="contact-links">
+    <a href="mailto:tgarcia1454@gmail.com" class="btn-primary">Email Me</a>
+    <a href="https://www.behance.net/tgarcia1456d8a" target="_blank" class="btn-secondary">Behance</a>
+    <a href="https://www.fiverr.com/tgarcia1453" target="_blank" class="btn-secondary">Fiverr</a>
+  </div>
+</section>
+<footer>
+  <div class="footer-logo">Antonio Garcia</div>
+  <span class="footer-copy">© 2026 — DMV Area — tgarcia1454@gmail.com</span>
+  <ul class="footer-links">
+    <li><a href="https://www.behance.net/tgarcia1456d8a" target="_blank">Behance</a></li>
+    <li><a href="https://www.fiverr.com/tgarcia1453" target="_blank">Fiverr</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+</body>
+</html>
